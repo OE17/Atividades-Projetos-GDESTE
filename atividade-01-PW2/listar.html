@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Veículos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --p: #1a237e; --pd: #000051; --s: #0277bd; --sd: #004c8c;
+            --a: #d32f2f; --su: #2e7d32; --w: #f57f17; --bg: #f5f7fa;
+            --sur: #fff; --t: #263238; --tl: #546e7a; --b: #e0e0e0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--t); line-height: 1.6; }
+        .c { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        nav {
+            background: linear-gradient(135deg, var(--p), var(--pd));
+            padding: 15px 30px; border-radius: 10px; margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nb { color: white; font-size: 1.5em; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nl { display: flex; gap: 20px; }
+        nav a { color: white; text-decoration: none; font-size: 1.1em; transition: all 0.3s ease; padding: 8px 15px; border-radius: 5px; }
+        nav a:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        .ph { text-align: center; margin-bottom: 40px; padding: 20px; background: var(--sur); border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .ph h1 { color: var(--p); font-size: 2.2em; margin-bottom: 10px; }
+        .ph p { color: var(--tl); font-size: 1.1em; }
+        .ab { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 20px; }
+        .sb { flex: 1; position: relative; }
+        .sb input { width: 100%; padding: 12px 20px 12px 45px; border: 2px solid var(--b); border-radius: 8px; font-size: 1em; transition: all 0.3s ease; background: var(--sur); }
+        .sb input:focus { border-color: var(--s); box-shadow: 0 0 0 3px rgba(2, 119, 189, 0.2); outline: none; }
+        .sb i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--tl); }
+        .rb {
+            background: linear-gradient(135deg, var(--s), var(--sd));
+            color: white; border: none; padding: 12px 25px; border-radius: 8px;
+            cursor: pointer; font-size: 1em; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 10px; white-space: nowrap;
+        }
+        .rb:hover { background: linear-gradient(135deg, var(--s), var(--sd)); transform: translateY(-2px); }
+        .rb i { animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .tc { background: var(--sur); border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        th, td { padding: 15px 20px; text-align: left; border-bottom: 1px solid var(--b); }
+        th { background: linear-gradient(135deg, var(--p), var(--pd)); color: white; font-weight: 600; position: sticky; top: 0; z-index: 10; }
+        tr { transition: all 0.3s ease; }
+        tr:hover { background: rgba(26, 35, 126, 0.05); transform: scale(1.01); }
+        .sb { padding: 5px 10px; border-radius: 15px; font-size: 0.9em; font-weight: 500; }
+        .sa { background: rgba(46, 125, 50, 0.1); color: var(--su); }
+        .si { background: rgba(211, 47, 47, 0.1); color: var(--a); }
+        #s { margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center; font-weight: 500; transition: all 0.3s ease; }
+        .l { color: var(--s); background: rgba(2, 119, 189, 0.1); }
+        .su { color: var(--su); background: rgba(46, 125, 50, 0.1); }
+        .e { color: var(--a); background: rgba(211, 47, 47, 0.1); }
+        .es { text-align: center; padding: 60px 20px; color: var(--tl); }
+        .es i { font-size: 64px; color: var(--b); margin-bottom: 20px; }
+        .es h3 { font-size: 1.5em; margin-bottom: 10px; color: var(--p); }
+        .es p { color: var(--tl); margin-bottom: 20px; }
+        .es .ab { display: inline-block; padding: 10px 20px; background: linear-gradient(135deg, var(--s), var(--sd)); color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease; }
+        .es .ab:hover { background: linear-gradient(135deg, var(--s), var(--sd)); transform: translateY(-2px); }
+        @media (max-width: 768px) {
+            .c { padding: 10px; }
+            nav { flex-direction: column; gap: 15px; padding: 15px; }
+            .nl { width: 100%; justify-content: space-between; }
+            .ab { flex-direction: column; }
+            .sb, .rb { width: 100%; }
+            .rb { justify-content: center; }
+            th, td { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="c">
+        <nav>
+            <a href="listar.html" class="nb"><i class="fas fa-car"></i>Sistema de Veículos</a>
+            <div class="nl">
+                <a href="listar.html"><i class="fas fa-list"></i> Listar Veículos</a>
+                <a href="adicionar.html"><i class="fas fa-plus"></i> Adicionar Veículo</a>
+            </div>
+        </nav>
+
+        <div class="ph">
+            <h1>Lista de Veículos</h1>
+            <p>Gerencie todos os veículos cadastrados no sistema</p>
+        </div>
+
+        <div class="ab">
+            <div class="sb">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar veículos..." id="searchInput">
+            </div>
+            <button class="rb" onclick="carregarVeiculos()">
+                <i class="fas fa-sync-alt"></i>
+                Atualizar Lista
+            </button>
+        </div>
+
+        <div id="s" class="l">Carregando...</div>
+
+        <div class="tc">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Placa</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Cor</th>
+                        <th>Ano Fabricação</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-veiculos-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const apiUrlListar = 'https://mauricio.inf.br/p6/api/list/';
+        const listaVeiculosBody = document.getElementById('lista-veiculos-body');
+        const statusDiv = document.getElementById('s');
+        const searchInput = document.getElementById('searchInput');
+        let veiculosData = [];
+
+        async function carregarVeiculos() {
+            statusDiv.className = 'l';
+            statusDiv.textContent = 'Carregando...';
+            listaVeiculosBody.innerHTML = '';
+
+            try {
+                const response = await fetch(apiUrlListar);
+                if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+                const data = await response.json();
+                veiculosData = data.veiculos || [];
+
+                if (veiculosData.length > 0) {
+                    renderizarVeiculos(veiculosData);
+                    statusDiv.className = 'su';
+                    statusDiv.textContent = `Lista atualizada com ${veiculosData.length} veículo(s).`;
+                } else {
+                    mostrarEstadoVazio();
+                }
+            } catch (error) {
+                console.error('Falha ao buscar veículos:', error);
+                statusDiv.className = 'e';
+                statusDiv.textContent = `Erro ao carregar veículos: ${error.message}`;
+                mostrarErro();
+            }
+        }
+
+        function renderizarVeiculos(veiculos) {
+            listaVeiculosBody.innerHTML = veiculos.map((veiculo, index) => `
+                <tr style="animation: fadeIn 0.5s ease forwards ${index * 0.1}s">
+                    <td>${veiculo.placa || 'N/A'}</td>
+                    <td>${veiculo.marca || 'N/A'}</td>
+                    <td>${veiculo.modelo || 'N/A'}</td>
+                    <td>${veiculo.cor || 'N/A'}</td>
+                    <td>${veiculo.ano_fabric || 'N/A'}</td>
+                    <td><span class="sb sa"><i class="fas fa-check-circle"></i> Ativo</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function mostrarEstadoVazio() {
+            statusDiv.className = 'es';
+            listaVeiculosBody.innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        <div class="es">
+                            <i class="fas fa-car"></i>
+                            <h3>Nenhum veículo cadastrado</h3>
+                            <p>Comece adicionando um novo veículo ao sistema</p>
+                            <a href="adicionar.html" class="ab">
+                                <i class="fas fa-plus"></i>
+                                Adicionar Veículo
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function mostrarErro() {
+            listaVeiculosBody.innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        <div class="es">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h3>Erro ao carregar dados</h3>
+                            <p>Não foi possível carregar a lista de veículos</p>
+                            <button onclick="carregarVeiculos()" class="ab">
+                                <i class="fas fa-sync-alt"></i>
+                                Tentar Novamente
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+
+        searchInput.addEventListener('input', e => {
+            const searchTerm = e.target.value.toLowerCase();
+            const veiculosFiltrados = veiculosData.filter(veiculo => 
+                veiculo.placa?.toLowerCase().includes(searchTerm) ||
+                veiculo.marca?.toLowerCase().includes(searchTerm) ||
+                veiculo.modelo?.toLowerCase().includes(searchTerm) ||
+                veiculo.cor?.toLowerCase().includes(searchTerm)
+            );
+            renderizarVeiculos(veiculosFiltrados);
+        });
+
+        document.addEventListener('DOMContentLoaded', carregarVeiculos);
+    </script>
+</body>
+</html>

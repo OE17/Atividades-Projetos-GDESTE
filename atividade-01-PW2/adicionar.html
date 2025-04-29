@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Veículo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --p: #1a237e; --pd: #000051; --s: #0277bd; --sd: #004c8c;
+            --a: #d32f2f; --su: #2e7d32; --w: #f57f17; --bg: #f5f7fa;
+            --sur: #fff; --t: #263238; --tl: #546e7a; --b: #e0e0e0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--t); line-height: 1.6; }
+        .c { max-width: 800px; margin: 0 auto; padding: 20px; }
+        nav {
+            background: linear-gradient(135deg, var(--p), var(--pd));
+            padding: 15px 30px; border-radius: 10px; margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nb { color: white; font-size: 1.5em; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nl { display: flex; gap: 20px; }
+        nav a { color: white; text-decoration: none; font-size: 1.1em; transition: all 0.3s ease; padding: 8px 15px; border-radius: 5px; }
+        nav a:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        .ph { text-align: center; margin-bottom: 40px; padding: 20px; background: var(--sur); border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .ph h1 { color: var(--p); font-size: 2.2em; margin-bottom: 10px; }
+        .ph p { color: var(--tl); font-size: 1.1em; }
+        .fc {
+            background: var(--sur); padding: 40px; border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); animation: slideUp 0.5s ease;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fh { text-align: center; margin-bottom: 40px; }
+        .fh i { font-size: 64px; color: var(--s); margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        .fh h2 { margin: 0; color: var(--p); font-size: 1.8em; }
+        .fh p { color: var(--tl); margin-top: 10px; font-size: 1.1em; }
+        .fg { margin-bottom: 25px; position: relative; }
+        .fg label { display: block; margin-bottom: 10px; font-weight: 600; color: var(--p); font-size: 1.1em; }
+        .fg input {
+            width: 100%; padding: 14px 14px 14px 45px; border: 2px solid var(--b);
+            border-radius: 8px; font-size: 1.1em; transition: all 0.3s ease; background: var(--sur);
+        }
+        .fg input:focus { border-color: var(--s); box-shadow: 0 0 0 3px rgba(2, 119, 189, 0.2); outline: none; }
+        .fg input:invalid { border-color: var(--a); }
+        .fg .i { position: absolute; left: 15px; top: 45px; color: var(--tl); font-size: 1.2em; transition: all 0.3s ease; }
+        .fg input:focus + .i { color: var(--s); }
+        .fg .h { font-size: 0.9em; color: var(--tl); margin-top: 5px; }
+        .fr { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        button {
+            background: linear-gradient(135deg, var(--su), var(--su));
+            color: white; border: none; padding: 16px 32px; border-radius: 8px;
+            cursor: pointer; font-size: 1.2em; width: 100%; transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px;
+        }
+        button:hover { background: linear-gradient(135deg, var(--su), var(--su)); transform: translateY(-2px); }
+        button:active { transform: translateY(0); }
+        #s { margin-top: 25px; padding: 15px; border-radius: 8px; text-align: center; font-weight: 500; transition: all 0.3s ease; }
+        .l { color: var(--s); background: rgba(2, 119, 189, 0.1); }
+        .su { color: var(--su); background: rgba(46, 125, 50, 0.1); }
+        .e { color: var(--a); background: rgba(211, 47, 47, 0.1); }
+        .ff { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--b); }
+        .ff p { color: var(--tl); margin-bottom: 15px; }
+        .ff a { color: var(--s); text-decoration: none; font-weight: 500; transition: all 0.3s ease; }
+        .ff a:hover { color: var(--sd); text-decoration: underline; }
+        @media (max-width: 768px) {
+            .c { padding: 10px; }
+            nav { flex-direction: column; gap: 15px; padding: 15px; }
+            .nl { width: 100%; justify-content: space-between; }
+            .fc { padding: 20px; }
+            .fr { grid-template-columns: 1fr; }
+            .fg input { font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="c">
+        <nav>
+            <a href="listar.html" class="nb"><i class="fas fa-car"></i>Sistema de Veículos</a>
+            <div class="nl">
+                <a href="listar.html"><i class="fas fa-list"></i> Listar Veículos</a>
+                <a href="adicionar.html"><i class="fas fa-plus"></i> Adicionar Veículo</a>
+            </div>
+        </nav>
+
+        <div class="ph">
+            <h1>Adicionar Novo Veículo</h1>
+            <p>Preencha os dados do veículo para cadastrá-lo no sistema</p>
+        </div>
+
+        <div class="fc">
+            <div class="fh">
+                <i class="fas fa-car"></i>
+                <h2>Cadastro de Veículo</h2>
+                <p>Preencha todos os campos abaixo com as informações do veículo</p>
+            </div>
+
+            <form id="add-vehicle-form">
+                <div class="fr">
+                    <div class="fg">
+                        <label for="marca">Marca:</label>
+                        <input type="text" id="marca" name="marca" required>
+                        <i class="fas fa-car-side i"></i>
+                        <div class="h">Ex: Toyota, Honda, Volkswagen</div>
+                    </div>
+                    <div class="fg">
+                        <label for="modelo">Modelo:</label>
+                        <input type="text" id="modelo" name="modelo" required>
+                        <i class="fas fa-car i"></i>
+                        <div class="h">Ex: Corolla, Civic, Gol</div>
+                    </div>
+                </div>
+
+                <div class="fr">
+                    <div class="fg">
+                        <label for="ano_fabric">Ano de Fabricação:</label>
+                        <input type="number" id="ano_fabric" name="ano_fabric" required min="1900" max="2099">
+                        <i class="fas fa-calendar-alt i"></i>
+                        <div class="h">Ano entre 1900 e 2099</div>
+                    </div>
+                    <div class="fg">
+                        <label for="cor">Cor:</label>
+                        <input type="text" id="cor" name="cor" required>
+                        <i class="fas fa-palette i"></i>
+                        <div class="h">Ex: Preto, Branco, Prata</div>
+                    </div>
+                </div>
+
+                <div class="fg">
+                    <label for="placa">Placa:</label>
+                    <input type="text" id="placa" name="placa" required pattern="[A-Za-z]{3}-?[0-9][A-Za-z0-9]{3}" title="Formato AAA-1234 ou AAA1B34">
+                    <i class="fas fa-id-card i"></i>
+                    <div class="h">Formato: AAA-1234 ou AAA1B34</div>
+                </div>
+
+                <button type="submit">
+                    <i class="fas fa-plus"></i>
+                    Adicionar Veículo
+                </button>
+            </form>
+
+            <div id="s"></div>
+
+            <div class="ff">
+                <p>Precisa verificar os veículos cadastrados?</p>
+                <a href="listar.html">
+                    <i class="fas fa-arrow-left"></i>
+                    Voltar para a Lista de Veículos
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apiUrlAdicionar = 'https://mauricio.inf.br/p6/api/add/';
+        const form = document.getElementById('add-vehicle-form');
+        const statusDiv = document.getElementById('s');
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            statusDiv.className = 'l';
+            statusDiv.textContent = 'Enviando...';
+
+            const formData = new FormData(form);
+            const veiculoData = {
+                marca: formData.get('marca'),
+                modelo: formData.get('modelo'),
+                ano_fabric: parseInt(formData.get('ano_fabric'), 10),
+                cor: formData.get('cor'),
+                placa: formData.get('placa')
+            };
+
+            if (isNaN(veiculoData.ano_fabric) || veiculoData.ano_fabric < 1900 || veiculoData.ano_fabric > 2099) {
+                statusDiv.className = 'e';
+                statusDiv.textContent = 'Erro: Ano de fabricação inválido.';
+                return;
+            }
+
+            try {
+                const response = await fetch(apiUrlAdicionar, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(veiculoData)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) throw new Error(result.message || `Erro HTTP: ${response.status}`);
+
+                statusDiv.className = 'su';
+                statusDiv.textContent = 'Veículo adicionado com sucesso!';
+                form.reset();
+
+                const formContainer = document.querySelector('.fc');
+                formContainer.style.animation = 'none';
+                formContainer.offsetHeight;
+                formContainer.style.animation = 'slideUp 0.5s ease';
+
+            } catch (error) {
+                console.error('Falha ao adicionar veículo:', error);
+                statusDiv.className = 'e';
+                statusDiv.textContent = `Erro ao adicionar veículo: ${error.message}`;
+            }
+        });
+
+        form.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.borderColor = this.validity.valid ? 'var(--su)' : 'var(--a)';
+            });
+        });
+
+        document.getElementById('placa').addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase();
+            value = value.replace(/[^A-Z0-9]/g, '');
+            if (value.length > 3) value = value.slice(0, 3) + '-' + value.slice(3);
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
